@@ -117,8 +117,6 @@ const INITIAL_PREVIEW_MARKDOWN_EN = `# Project Name
 export const useAppStore = create<AppState & { 
   _hasHydrated: boolean; 
   setHasHydrated: (state: boolean) => void;
-  previewMarkdownEn: string;
-  setPreviewMarkdownEn: (markdown: string) => void;
 }>()(
   persist(
     (set) => ({
@@ -198,6 +196,15 @@ export const useAppStore = create<AppState & {
         previewMarkdown: state.previewMarkdown,
         previewMarkdownEn: state.previewMarkdownEn,
       }),
+      merge: (persistedState, currentState) => {
+        const persisted = persistedState as Partial<typeof currentState>;
+        return {
+          ...currentState,
+          ...persisted,
+          // Ensure previewMarkdownEn has a default value if not in storage
+          previewMarkdownEn: persisted?.previewMarkdownEn || INITIAL_PREVIEW_MARKDOWN_EN,
+        };
+      },
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true);
       },
