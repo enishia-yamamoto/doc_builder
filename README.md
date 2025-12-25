@@ -76,7 +76,7 @@ npm run dev
 
 <p align="center">
   <a href="https://startpack.shingoirie.com/">
-    <img src="https://startpack.shingoirie.com/og-image.png" alt="StartPack" width="600">
+    <img src="https://startpack.shingoirie.com/img/ogp.png" alt="StartPack" width="600">
   </a>
 </p>
 
