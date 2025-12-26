@@ -14,7 +14,7 @@
 
 ## ✨ 特徴
 
-- 🤖 **Claude Opus 4.5** - 高品質な対話でプロダクト仕様を整理
+- 🤖 **Claude & Gemini** - 高品質な対話でプロダクト仕様を整理（Gemini 3 Pro 対応）
 - 📝 **ヒアリング** - プロジェクト概要から技術スタックまで段階的に超細かく整理
 - 👀 **リアルタイムプレビュー** - チャット内容がリアルタイムで仕様書に反映
 - 📊 **Mermaid フロー図対応** - 画面遷移図を自動生成・表示
@@ -31,6 +31,7 @@
 
 - npm または yarn または pnpm
 - Claude API キー（[console.anthropic.com](https://console.anthropic.com/) で取得）
+- または Gemini API キー（[aistudio.google.com](https://aistudio.google.com/) で取得）
 
 ### インストール
 
@@ -50,7 +51,7 @@ npm run dev
 
 ブラウザで [http://localhost:3000](http://localhost:3000) を開いてください。
 
-**初回アクセス時に Claude API キーの入力を求められます。**
+**初回アクセス時に API キー（Claude または Gemini）の入力・選択を求められます。**
 
 ## 🔐 API キーについて
 
