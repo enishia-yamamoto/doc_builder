@@ -41,7 +41,7 @@ original Doc Builder allows specification creation with Claude, but this fork ha
 
 ```bash
 # リポジトリをクローン
-git clone https://github.com/iritec/doc_builder
+git clone https://github.com/enishia-yamamoto/doc_builder
 
 # 依存関係をインストール
 npm install
