@@ -8,7 +8,11 @@
 
 ## 概要
 
+**Note: This repository is a fork of [iritec/doc_builder](https://github.com/iritec/doc_builder) by Shingo Irie.**
+original Doc Builder allows specification creation with Claude, but this fork has been customized to also support **Google Gemini** models.
+
 **Doc Builder** は、Claude と対話しながらプロダクトの仕様書を段階的に作成できるサービスです。
+本リポジトリは入江慎吾氏によるオリジナルの [Doc Builder](https://github.com/iritec/doc_builder) をフォークし、**Google Gemini** モデルでも動作するように拡張したものです。
 
 バイブコーディングする際、最初にしっかり仕様書を決めている方が破綻なくスムーズに開発を行うことができます。とはいえ、最初から仕様をバッチリ決めるのは難易度が高いですよね。DocBuilder では AI が足りないところをこれでもかというくらい細かく聞いてくるので一緒に会話しながら濃密な仕様書をつくることができます。
 
