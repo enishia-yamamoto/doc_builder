@@ -41,7 +41,7 @@ function parseMarkdownSections(markdown: string): Map<string, string> {
       projectName = line;
       continue;
     }
-    
+
     // セクションヘッダー（h2）
     const sectionMatch = line.match(/^## (\d+\. .+)$/);
     if (sectionMatch) {
@@ -54,15 +54,15 @@ function parseMarkdownSections(markdown: string): Map<string, string> {
       currentContent.push(line);
     }
   }
-  
+
   if (currentSection) {
     sections.set(currentSection, currentContent.join('\n').trim());
   }
-  
+
   if (projectName) {
     sections.set('projectName', projectName);
   }
-  
+
   return sections;
 }
 
@@ -72,33 +72,35 @@ function buildMarkdown(sections: Map<string, string>, locale: string = 'ja'): st
   const defaultProjectName = locale === 'en' ? '# Project Name' : '# プロジェクト名';
   const projectName = sections.get('projectName') || defaultProjectName;
   let markdown = projectName + '\n\n';
-  
+
   for (const sectionName of SECTIONS) {
     const content = sections.get(sectionName);
     if (content) {
       markdown += `## ${sectionName}\n\n${content}\n\n`;
     }
   }
-  
+
   return markdown.trim();
 }
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { 
+    const {
       messages,
       currentMarkdown,
       apiKey,
+      provider = 'claude',
       locale = 'ja',
     }: {
       messages: { role: 'user' | 'assistant'; content: string }[];
       currentMarkdown?: string;
       apiKey?: string;
+      provider?: 'claude' | 'gemini';
       locale?: 'ja' | 'en';
     } = body;
 
-    const model = getAIProvider(apiKey);
+    const model = getAIProvider(apiKey, provider);
     const SECTIONS = locale === 'en' ? SECTIONS_EN : SECTIONS_JA;
 
     // 空のメッセージをフィルタリング
@@ -214,21 +216,21 @@ Output only the sections that need to be changed in Markdown format.`;
       // 差分をマージ
       const currentSections = parseMarkdownSections(currentMarkdown);
       const diffSections = parseMarkdownSections(result.text);
-      
+
       // 差分を適用
       for (const [key, value] of diffSections) {
         if (value && value.trim().length > 0) {
           currentSections.set(key, value);
         }
       }
-      
+
       const mergedMarkdown = buildMarkdown(currentSections, locale);
-      
+
       return new Response(
         JSON.stringify({ markdown: mergedMarkdown, isDiff: true }),
-        { 
-          status: 200, 
-          headers: { 'Content-Type': 'application/json' } 
+        {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' }
         }
       );
     }
@@ -404,9 +406,9 @@ Generate the specification according to the format above.`;
 
     return new Response(
       JSON.stringify({ markdown, isDiff: false }),
-      { 
-        status: 200, 
-        headers: { 'Content-Type': 'application/json' } 
+      {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
       }
     );
   } catch (error) {

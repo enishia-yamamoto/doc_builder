@@ -8,21 +8,23 @@ export const maxDuration = 60;
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { 
-      messages, 
+    const {
+      messages,
       apiKey,
+      provider = 'claude',
       phase = 1,
       spec = {},
       locale = 'ja'
     }: {
       messages: { role: 'user' | 'assistant'; content: string }[];
       apiKey?: string;
+      provider?: 'claude' | 'gemini';
       phase?: Phase;
       spec?: Partial<ProjectSpec>;
       locale?: 'ja' | 'en';
     } = body;
 
-    const model = getAIProvider(apiKey);
+    const model = getAIProvider(apiKey, provider);
     const systemPrompt = getSystemPrompt(phase, spec, locale);
 
     // 空のメッセージをフィルタリング

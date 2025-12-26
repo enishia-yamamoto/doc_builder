@@ -48,15 +48,12 @@ export function InputForm({ onSubmit, isLoading, initialValue = '' }: InputFormP
       return;
     }
 
-    // Ctrl+EnterまたはShift+Enterで送信
-    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey || e.shiftKey)) {
+    // Enterのみで送信（Shift+Enterは改行）
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSubmit();
       return;
     }
-    
-    // Enterのみの場合は改行（デフォルト動作）だが、フォーム送信はしない
-    // ここでは何もしない（デフォルトで改行される）
   };
 
   return (
@@ -67,7 +64,7 @@ export function InputForm({ onSubmit, isLoading, initialValue = '' }: InputFormP
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="メッセージを入力... (Ctrl+EnterまたはShift+Enterで送信)"
+          placeholder="メッセージを入力... (Enterで送信、Shift+Enterで改行)"
           className="min-h-10! max-h-[200px] resize-none py-2"
           disabled={isLoading}
           rows={1}

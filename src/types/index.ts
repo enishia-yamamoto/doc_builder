@@ -1,4 +1,4 @@
-export type AIProvider = 'claude';
+export type AIProvider = 'claude' | 'gemini';
 
 export interface Message {
   id: string;

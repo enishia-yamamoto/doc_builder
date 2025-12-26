@@ -114,9 +114,11 @@ const INITIAL_PREVIEW_MARKDOWN_EN = `# Project Name
 (No decisions yet)
 `;
 
-export const useAppStore = create<AppState & { 
-  _hasHydrated: boolean; 
+export const useAppStore = create<AppState & {
+  _hasHydrated: boolean;
   setHasHydrated: (state: boolean) => void;
+  isSettingsOpen: boolean;
+  setSettingsOpen: (isOpen: boolean) => void;
 }>()(
   persist(
     (set) => ({
@@ -129,6 +131,8 @@ export const useAppStore = create<AppState & {
       previewMarkdownEn: INITIAL_PREVIEW_MARKDOWN_EN,
       _hasHydrated: false,
       setHasHydrated: (state) => set({ _hasHydrated: state }),
+      isSettingsOpen: false,
+      setSettingsOpen: (isOpen) => set({ isSettingsOpen: isOpen }),
 
       addMessage: (message) =>
         set((state) => ({
@@ -179,9 +183,9 @@ export const useAppStore = create<AppState & {
 
       clearMessages: () => set({ messages: [] }),
 
-      resetSpec: () => set({ 
-        spec: initialSpec, 
-        currentPhase: 1, 
+      resetSpec: () => set({
+        spec: initialSpec,
+        currentPhase: 1,
         previewMarkdown: INITIAL_PREVIEW_MARKDOWN_JA,
         previewMarkdownEn: INITIAL_PREVIEW_MARKDOWN_EN,
       }),
